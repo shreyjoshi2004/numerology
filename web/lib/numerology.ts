@@ -90,7 +90,6 @@ export const COUNTRY_SPECS: Record<string, CountrySpec> = {
   US: { code: "US", name: "United States",  dialPrefix: "1",  domesticMin: 10, domesticMax: 10, numberTypes: ["Local", "TollFree"] },
   CA: { code: "CA", name: "Canada",         dialPrefix: "1",  domesticMin: 10, domesticMax: 10, numberTypes: ["Local", "TollFree"] },
   GB: { code: "GB", name: "United Kingdom", dialPrefix: "44", domesticMin: 10, domesticMax: 10, numberTypes: ["Local", "Mobile", "National", "TollFree"] },
-  IN: { code: "IN", name: "India",          dialPrefix: "91", domesticMin: 10, domesticMax: 10, numberTypes: ["Mobile"] },
   AU: { code: "AU", name: "Australia",      dialPrefix: "61", domesticMin: 9,  domesticMax: 9,  numberTypes: ["Local", "Mobile"] },
   DE: { code: "DE", name: "Germany",        dialPrefix: "49", domesticMin: 10, domesticMax: 11, numberTypes: ["Local", "Mobile"] },
   FR: { code: "FR", name: "France",         dialPrefix: "33", domesticMin: 9,  domesticMax: 9,  numberTypes: ["Local", "Mobile"] },
