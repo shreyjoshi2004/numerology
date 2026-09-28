@@ -15,6 +15,7 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       { href: "/name", label: "Name" },
       { href: "/phone", label: "Phone" },
+      { href: "/ank-kundali", label: "Ank Kundali" },
     ],
   },
 ];

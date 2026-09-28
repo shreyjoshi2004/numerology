@@ -116,63 +116,12 @@ export default async function Image() {
           width: "100%",
           height: "100%",
           display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           backgroundColor: "#FDF8F1",
-          position: "relative",
         }}
       >
-        <img
-          src={dataUri}
-          width={760}
-          height={760}
-          style={{
-            position: "absolute",
-            left: -120,
-            top: -65,
-          }}
-        />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            marginLeft: 660,
-            marginRight: 70,
-            height: "100%",
-          }}
-        >
-          <div
-            style={{
-              fontFamily: "Georgia, serif",
-              fontSize: 78,
-              color: "#3E2A18",
-              lineHeight: 1.04,
-              letterSpacing: -1.5,
-            }}
-          >
-            Art of Numerology
-          </div>
-          <div
-            style={{
-              fontSize: 30,
-              color: "#6B4A2B",
-              marginTop: 26,
-              lineHeight: 1.35,
-            }}
-          >
-            Vedic name and phone numerology — find numbers that align with your roots.
-          </div>
-          <div
-            style={{
-              fontSize: 22,
-              color: "#B05818",
-              marginTop: 36,
-              letterSpacing: 4,
-              textTransform: "uppercase",
-            }}
-          >
-            Mulank · Bhagyank · Name Number
-          </div>
-        </div>
+        <img src={dataUri} width={620} height={620} />
       </div>
     ),
     { ...size }
