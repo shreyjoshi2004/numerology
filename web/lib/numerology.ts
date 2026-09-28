@@ -219,7 +219,8 @@ export type AnkKundaliResult = {
 //  4. The zodiac sign's planetary number is added only if it is already
 //     present on the grid (it never introduces a new digit).
 //  5. Latent number = digital root of the last two year digits, added only
-//     if it isn't already on the grid.
+//     if it is already present on the grid (like the zodiac step, it never
+//     introduces a new digit).
 export function ankKundaliFromDob(dob: string): AnkKundaliResult | null {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dob);
   if (!m) return null;
@@ -288,9 +289,9 @@ export function ankKundaliFromDob(dob: string): AnkKundaliResult | null {
     added: zodiacAdded,
   });
 
-  // 5. Latent number — only fills a missing digit.
+  // 5. Latent number — only reinforces an existing digit.
   const latentValue = reduceToRoot(Number(yearLastTwo));
-  const latentAdded = latentValue >= 1 && latentValue <= 9 && grid[latentValue] === 0;
+  const latentAdded = latentValue >= 1 && latentValue <= 9 && grid[latentValue] > 0;
   if (latentAdded) addDigit(latentValue);
   contributions.push({
     label: "Latent number",
@@ -299,7 +300,7 @@ export function ankKundaliFromDob(dob: string): AnkKundaliResult | null {
         ? "0 has no cell — skipped"
         : latentAdded
           ? `${latentValue} added`
-          : `${latentValue} already on grid — skipped`,
+          : `${latentValue} not on grid — skipped`,
     digits: latentValue >= 1 && latentValue <= 9 ? [latentValue] : [],
     added: latentAdded,
   });
