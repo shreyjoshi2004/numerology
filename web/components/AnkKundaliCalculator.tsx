@@ -28,6 +28,9 @@ export default function AnkKundaliCalculator() {
             type="date"
             value={dob}
             onChange={(e) => setDob(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && dob) generate();
+            }}
             max={new Date().toISOString().slice(0, 10)}
             className="input-aol tabular-nums cursor-pointer"
           />
