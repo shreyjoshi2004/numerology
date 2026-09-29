@@ -7,8 +7,8 @@ The repo ships in two halves:
 
 - **`/` (Python CLI)** — original scripts for batch searching Twilio inventory
   and exporting ranked CSVs.
-- **`web/` (Next.js app)** — production web UI at *Art of Numerology* with the
-  same logic ported to TypeScript and a thin Twilio proxy route.
+- **`web/` (Next.js app)** — production web UI at *Art of Numerology* with
+  the name-number and Ank Kundali logic ported to TypeScript.
 
 ## What it does
 
@@ -37,12 +37,12 @@ classes — so the search enumerates length-`k` patterns drawn from
 `{Mulank, Bhagyank}` and issues one `Contains=<pattern>` request per pattern.
 
 A single fixed `k` is too narrow (especially when `Mulank == Bhagyank`, where
-`k=5` collapses to one pattern like `55555`). Both the CLI and the web app
-search across multiple anchor lengths (default `2,3,4,5`), union the
-responses, dedupe by phone number, and apply the post-filter. Twilio caps each
-`Contains` query at `PageSize` results regardless of true inventory, and
-different lengths empirically sample disjoint slices of inventory — so more
-anchors strictly yield more candidates.
+`k=5` collapses to one pattern like `55555`). The CLI searches across
+multiple anchor lengths (default `2,3,4,5`), unions the responses, dedupes by
+phone number, and applies the post-filter. Twilio caps each `Contains` query
+at `PageSize` results regardless of true inventory, and different lengths
+empirically sample disjoint slices of inventory — so more anchors strictly
+yield more candidates.
 
 `debug_anchors.py` is a one-off harness comparing per-length hit counts and
 overlaps for a fixed `(BN, DN)` pair.
@@ -87,43 +87,26 @@ Compute a name number:
 
 ## Web app (`web/`)
 
-Next.js 15 (App Router) + React 19 + Tailwind v4. Two tools on a single page:
+Next.js 15 (App Router) + React 19 + Tailwind v4.
 
 - **Name number** — enter a name; see the per-letter breakdown and reduced
   root.
-- **Phone numbers** — enter date of birth (or directly enter Mulank/Bhagyank)
-  + country, get ranked Twilio matches. The browser drives the anchor
-  search and post-filter; the server only proxies Twilio.
+- **Ank Kundali** — enter a date of birth; see the Vedic grid chart.
 
 ### Local development
 
 ```bash
 cd web
-cp .env.local.example .env.local   # fill in Twilio credentials
 npm install
 npm run dev
 ```
 
 Open <http://localhost:3000>.
 
-### `/api/twilio` proxy
-
-The route at `web/app/api/twilio/route.ts` is the only server-side surface.
-It:
-
-- accepts `?country=&contains=&pageSize=` and forwards to Twilio's
-  `AvailablePhoneNumbers/{country}/Local.json`,
-- holds Twilio credentials server-side (never sent to the browser),
-- rejects cross-origin requests unless the origin appears in
-  `ALLOWED_ORIGINS` (comma-separated). Same-origin and localhost are allowed
-  by default.
-
 ### Deploy
 
 The `web/` directory is set up for Vercel (`vercel.json` declares
-`framework: nextjs`). Set the same `TWILIO_*` env vars plus
-`ALLOWED_ORIGINS=https://your-domain` in the Vercel project; production
-deploys then drive the same UI without a self-hosted backend.
+`framework: nextjs`).
 
 ## Repository layout
 
@@ -135,16 +118,14 @@ ranked_phone_numbers.csv   Sample CLI output
 
 web/
   app/
-    page.tsx           Landing page (NameCalculator + PhoneSearch)
+    page.tsx           Landing page (tool tiles)
     layout.tsx         Fonts, OpenGraph metadata, page chrome
-    api/twilio/        Server-side proxy to Twilio
   components/
     NameCalculator.tsx
-    PhoneSearch.tsx    Mulank/Bhagyank input + ranked results
-    PhoneCard.tsx
+    AnkKundaliCalculator.tsx
     PageMandala.tsx    Background SVG ornament
     Tooltip.tsx
-  lib/numerology.ts    TS port of digit-root, anchor, scoring helpers
+  lib/numerology.ts    TS port of digit-root, name-number, Ank Kundali helpers
 ```
 
 ## Credits

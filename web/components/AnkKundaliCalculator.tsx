@@ -18,7 +18,7 @@ export default function AnkKundaliCalculator() {
 
   return (
     <div className="space-y-4">
-      <div className="flex gap-2 items-end">
+      <div className="flex flex-col sm:flex-row gap-2 sm:items-end">
         <div className="flex-1">
           <label className="eyebrow block mb-1.5" htmlFor="ank-dob-input">
             Date of Birth
@@ -39,7 +39,7 @@ export default function AnkKundaliCalculator() {
           type="button"
           onClick={generate}
           disabled={!dob}
-          className="px-5 py-2 rounded-xl bg-[#B05818] text-white text-sm font-medium shadow-sm transition-colors hover:bg-[#8B2C2C] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-[#B05818]"
+          className="px-5 py-2 rounded-xl bg-[#B05818] text-white text-sm font-medium shadow-sm transition-colors hover:bg-[#8B2C2C] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-[#B05818] w-full sm:w-auto min-h-[44px] sm:min-h-0"
         >
           Generate
         </button>
@@ -70,15 +70,15 @@ export default function AnkKundaliCalculator() {
           </div>
 
           <div className="grid grid-cols-2 gap-2">
-            <div className="bg-[#FDF8F1] border border-[#EADFCB] rounded-xl px-3 py-2 flex items-baseline justify-between gap-2">
+            <div className="bg-[#FDF8F1] border border-[#EADFCB] rounded-xl px-3 py-2 flex items-baseline justify-between gap-2 flex-wrap">
               <div className="eyebrow flex items-center">Moolank</div>
               <div className="font-serif text-lg text-[#2A2A2A] tabular-nums leading-none">
                 {result.moolank.value}
               </div>
             </div>
-            <div className="bg-[#FDF8F1] border border-[#EADFCB] rounded-xl px-3 py-2 flex items-baseline justify-between gap-2">
+            <div className="bg-[#FDF8F1] border border-[#EADFCB] rounded-xl px-3 py-2 flex items-baseline justify-between gap-2 flex-wrap">
               <div className="eyebrow flex items-center">Bhagyank</div>
-              <div className="flex items-baseline gap-2">
+              <div className="flex items-baseline gap-2 shrink-0 whitespace-nowrap">
                 <div className="text-xs text-[#6B6B6B] tabular-nums">
                   compound{" "}
                   <span className="text-[#2A2A2A] font-medium">

@@ -4,7 +4,6 @@ import { NAV_GROUPS } from "@/lib/nav";
 
 const TOOL_DESCRIPTIONS: Record<string, string> = {
   "/name": "Reduce a name to its single-digit root.",
-  "/phone": "Search numbers aligned to your roots.",
   "/ank-kundali": "Plot a Vedic grid chart from your date of birth.",
 };
 

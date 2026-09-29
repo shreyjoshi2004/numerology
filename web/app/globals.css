@@ -216,48 +216,6 @@ input[type="date"].input-aol {
   appearance: none;
 }
 
-/* ─── Score bands on PhoneCard ─────────────────────────────── */
-.card-band {
-  position: relative;
-  overflow: hidden;
-}
-.card-band::before {
-  content: "";
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 3px;
-  background: transparent;
-  border-top-left-radius: inherit;
-  border-bottom-left-radius: inherit;
-}
-.card-band.is-premium::before {
-  background: linear-gradient(180deg, #4FA85F, #2F7A3A);
-}
-.card-band.is-strong::before {
-  background: linear-gradient(180deg, #E97724, #B05818);
-}
-.card-band.is-standard::before {
-  background: #EADFCB;
-}
-.card-band.is-premium {
-  box-shadow: 0 4px 18px -10px rgba(47, 122, 58, 0.45);
-}
-
-.premium-pip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.1rem 0.5rem;
-  border-radius: 9999px;
-  background: linear-gradient(90deg, #FBF0E0, #F4E2BD);
-  border: 1px solid #E5C98A;
-  color: #8C6B1E;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.10em;
-  text-transform: uppercase;
-}
-
 /* ─── Inline tooltip ──────────────────────────────────────── */
 .tip-trigger {
   display: inline-flex;
