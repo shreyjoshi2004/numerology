@@ -125,7 +125,7 @@ export type AnkKundaliResult = {
   moolank: { value: number; added: boolean };
   bhagyank: { compound: number; reduced: number };
   zodiac: ZodiacInfo & { added: boolean };
-  latent: { value: number; added: boolean };
+  latent: { value: number | null; added: boolean };
   contributions: AnkKundaliContribution[];
 };
 
@@ -144,7 +144,8 @@ export type AnkKundaliResult = {
 //     present on the grid (it never introduces a new digit).
 //  5. Latent number = digital root of the last two year digits, added only
 //     if it is already present on the grid (like the zodiac step, it never
-//     introduces a new digit).
+//     introduces a new digit). If either of the last two year digits is 0,
+//     the latent number is N/A and is never added.
 export function ankKundaliFromDob(dob: string): AnkKundaliResult | null {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dob);
   if (!m) return null;
@@ -213,19 +214,24 @@ export function ankKundaliFromDob(dob: string): AnkKundaliResult | null {
     added: zodiacAdded,
   });
 
-  // 5. Latent number — only reinforces an existing digit.
-  const latentValue = reduceToRoot(Number(yearLastTwo));
-  const latentAdded = latentValue >= 1 && latentValue <= 9 && grid[latentValue] > 0;
-  if (latentAdded) addDigit(latentValue);
+  // 5. Latent number — only reinforces an existing digit. N/A (and never
+  // added) whenever either of the last two year digits is 0.
+  const yearHasZeroDigit = yearLastTwo.includes("0");
+  const latentValue = yearHasZeroDigit ? null : reduceToRoot(Number(yearLastTwo));
+  const latentAdded =
+    latentValue !== null && latentValue >= 1 && latentValue <= 9 && grid[latentValue] > 0;
+  if (latentAdded) addDigit(latentValue as number);
   contributions.push({
     label: "Latent number",
     detail:
-      latentValue === 0
-        ? "0 has no cell — skipped"
-        : latentAdded
-          ? `${latentValue} added`
-          : `${latentValue} not on grid — skipped`,
-    digits: latentValue >= 1 && latentValue <= 9 ? [latentValue] : [],
+      latentValue === null
+        ? "N/A — 0 in last two year digits"
+        : latentValue === 0
+          ? "0 has no cell — skipped"
+          : latentAdded
+            ? `${latentValue} added`
+            : `${latentValue} not on grid — skipped`,
+    digits: latentValue !== null && latentValue >= 1 && latentValue <= 9 ? [latentValue] : [],
     added: latentAdded,
   });
 
